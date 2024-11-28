@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "89059391038",
+    "project_id": "habits-uas",
+    "storage_bucket": "habits-uas.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:89059391038:android:017f28ff5d54259a98436f",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_uas_prod"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2-dOGV4vRu6LnJIMOiLW6AGVB7h5SdhA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:89059391038:android:1e2d515cba34007298436f",
+        "android_client_info": {
+          "package_name": "com.example.flutter_testt"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2-dOGV4vRu6LnJIMOiLW6AGVB7h5SdhA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:89059391038:android:f6111fbc0e1e941e98436f",
+        "android_client_info": {
+          "package_name": "com.example.uas_productivity"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2-dOGV4vRu6LnJIMOiLW6AGVB7h5SdhA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

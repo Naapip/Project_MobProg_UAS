@@ -1,6 +1,6 @@
 {
-    "name": "flutter_application_uas_productivity",
-    "short_name": "flutter_application_uas_productivity",
+    "name": "uas_productivity",
+    "short_name": "uas_productivity",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

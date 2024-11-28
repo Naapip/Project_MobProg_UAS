@@ -11,7 +11,10 @@ class LoginScreen1 extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFFD1C4E9), Color(0xFFBBDEFB)], // warna gradient
+            colors: [
+              Color(0xFF2A2D3E),
+              Color(0xFF4E5481)
+            ], // Warna gelap untuk tampilan game
           ),
         ),
         child: SafeArea(
@@ -22,14 +25,21 @@ class LoginScreen1 extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Teks judul
+                  // Teks judul dengan efek glow
                   Text(
                     "Do your tasks\nquickly and easy",
                     style: TextStyle(
                       fontSize: 34,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                      color: Colors.cyanAccent,
                       height: 1.3,
+                      shadows: [
+                        Shadow(
+                          offset: Offset(3, 3),
+                          blurRadius: 5.0,
+                          color: Colors.black87,
+                        ),
+                      ],
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -38,32 +48,45 @@ class LoginScreen1 extends StatelessWidget {
                     "Your tasks, your rules, our support.",
                     style: TextStyle(
                       fontSize: 16,
-                      color: Colors.grey.shade700,
+                      color: Colors.white70,
+                      shadows: [
+                        Shadow(
+                          offset: Offset(2, 2),
+                          blurRadius: 3.0,
+                          color: Colors.black54,
+                        ),
+                      ],
                     ),
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 40),
 
-                  // Tombol Login
+                  // Tombol Login dengan efek glow
                   ElevatedButton(
                     onPressed: () {
-                      // Aksi untuk tombol Login
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => LoginScreen2()),
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
+                      backgroundColor: Colors.cyanAccent,
                       foregroundColor: Colors.black,
                       padding:
                           EdgeInsets.symmetric(vertical: 15, horizontal: 100),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      elevation: 4,
+                      elevation: 10,
+                      shadowColor: Colors.cyanAccent.withOpacity(0.5),
                     ),
-                    child: Text("Login"),
+                    child: Text(
+                      "Login",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                   SizedBox(height: 10),
 
@@ -78,7 +101,11 @@ class LoginScreen1 extends StatelessWidget {
                     },
                     child: Text(
                       "Create an account",
-                      style: TextStyle(color: Colors.black),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
 
@@ -87,12 +114,18 @@ class LoginScreen1 extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     child: Row(
                       children: [
-                        Expanded(child: Divider(color: Colors.grey)),
+                        Expanded(child: Divider(color: Colors.white30)),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Text("OR"),
+                          child: Text(
+                            "OR",
+                            style: TextStyle(
+                              color: Colors.white70,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
-                        Expanded(child: Divider(color: Colors.grey)),
+                        Expanded(child: Divider(color: Colors.white30)),
                       ],
                     ),
                   ),

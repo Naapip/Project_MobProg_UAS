@@ -1,6 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'home_screen.dart';
 
-class LoginScreen2 extends StatelessWidget {
+class LoginScreen2 extends StatefulWidget {
+  @override
+  _LoginScreen2State createState() => _LoginScreen2State();
+}
+
+class _LoginScreen2State extends State<LoginScreen2> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  String? _errorMessage;
+
+  Future<void> _loginWithEmailPassword() async {
+    try {
+      String email = _emailController.text.trim();
+      String password = _passwordController.text.trim();
+
+      if (email.isEmpty || password.isEmpty) {
+        setState(() {
+          _errorMessage = 'Email and password cannot be empty.';
+        });
+        return;
+      }
+
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+          (Route<dynamic> route) => false);
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        _errorMessage = e.message;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -9,7 +49,7 @@ class LoginScreen2 extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Colors.white, Color(0xFFEDE7F6)], // gradient ringan
+            colors: [Color(0xFF2A2D3E), Color(0xFF4E5481)],
           ),
         ),
         child: SafeArea(
@@ -21,13 +61,20 @@ class LoginScreen2 extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // Teks judul
+                  // Teks judul dengan efek glow
                   Text(
                     "Log in to HabitHUB",
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: Colors.purple,
+                      color: Colors.cyanAccent,
+                      shadows: [
+                        Shadow(
+                          offset: Offset(3, 3),
+                          blurRadius: 5.0,
+                          color: Colors.black87,
+                        ),
+                      ],
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -35,65 +82,30 @@ class LoginScreen2 extends StatelessWidget {
 
                   // Teks deskripsi
                   Text(
-                    "Welcome back! Sign in using your social account or email to continue us",
-                    style: TextStyle(fontSize: 16, color: Colors.grey.shade700),
+                    "Welcome back! Sign in using your social account or email to continue with us",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white70,
+                      shadows: [
+                        Shadow(
+                          offset: Offset(2, 2),
+                          blurRadius: 3.0,
+                          color: Colors.black54,
+                        ),
+                      ],
+                    ),
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 30),
 
-                  // Tombol login dengan akun sosial
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        icon: Image.asset(
-                          'assets/facebook.png',
-                          width: 40,
-                          height: 40,
-                        ),
-                        onPressed: () {},
-                      ),
-                      SizedBox(width: 20),
-                      IconButton(
-                        icon: Image.asset(
-                          'assets/google.png',
-                          width: 40,
-                          height: 40,
-                        ),
-                        onPressed: () {},
-                      ),
-                      SizedBox(width: 20),
-                      IconButton(
-                        icon: Image.asset(
-                          'assets/apple.png',
-                          width: 40,
-                          height: 40,
-                        ),
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-
-                  // Pembatas dengan teks "OR"
-                  Row(
-                    children: [
-                      Expanded(child: Divider(color: Colors.grey)),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Text("OR", style: TextStyle(color: Colors.grey)),
-                      ),
-                      Expanded(child: Divider(color: Colors.grey)),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-
-                  // Kotak teks untuk Email
+                  // Input Email
                   TextField(
+                    controller: _emailController,
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor: Colors.white.withOpacity(0.3),
                       labelText: 'Email',
+                      labelStyle: TextStyle(color: Colors.white70),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide.none,
@@ -101,16 +113,19 @@ class LoginScreen2 extends StatelessWidget {
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                     ),
+                    style: TextStyle(color: Colors.white),
                   ),
                   SizedBox(height: 15),
 
-                  // Kotak teks untuk Password
+                  // Input Password
                   TextField(
+                    controller: _passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor: Colors.white.withOpacity(0.3),
                       labelText: 'Password',
+                      labelStyle: TextStyle(color: Colors.white70),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide.none,
@@ -118,26 +133,38 @@ class LoginScreen2 extends StatelessWidget {
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                     ),
+                    style: TextStyle(color: Colors.white),
                   ),
+                  SizedBox(height: 20),
+
+                  // Menampilkan pesan error jika ada
+                  if (_errorMessage != null)
+                    Text(
+                      _errorMessage!,
+                      style: TextStyle(color: Colors.redAccent),
+                      textAlign: TextAlign.center,
+                    ),
                   SizedBox(height: 30),
 
-                  // Tombol Login
+                  // Tombol Login dengan efek glow
                   ElevatedButton(
-                    onPressed: () {
-                      // Aksi ketika tombol Login ditekan
-                    },
+                    onPressed: _loginWithEmailPassword,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
+                      backgroundColor: Colors.cyanAccent,
                       foregroundColor: Colors.black,
                       padding: EdgeInsets.symmetric(vertical: 15),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      elevation: 4,
+                      elevation: 10,
+                      shadowColor: Colors.cyanAccent.withOpacity(0.5),
                     ),
                     child: Text(
                       "Login",
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],
@@ -146,22 +173,6 @@ class LoginScreen2 extends StatelessWidget {
           ),
         ),
       ),
-
-      // // Bottom Navigation Bar (optional jika Anda ingin menambahkannya)
-      // bottomNavigationBar: BottomAppBar(
-      //   color: Colors.white,
-      //   child: Padding(
-      //     padding: const EdgeInsets.symmetric(vertical: 10),
-      //     child: Row(
-      //       mainAxisAlignment: MainAxisAlignment.spaceAround,
-      //       children: [
-      //         Icon(Icons.calendar_today, color: Colors.grey),
-      //         Icon(Icons.analytics, color: Colors.grey),
-      //         Icon(Icons.person, color: Colors.grey),
-      //       ],
-      //     ),
-      //   ),
-      // ),
     );
   }
 }

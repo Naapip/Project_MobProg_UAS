@@ -1,4 +1,4 @@
-# flutter_application_uas_productivity
+# uas_productivity
 
 A new Flutter project.
 
