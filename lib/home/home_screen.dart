@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project_mobprog_uas/login/login_screen1.dart';
+import 'package:project_mobprog_uas/profile/profile.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'fl_chart.dart';
+import 'package:project_mobprog_uas/profile/profile.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -60,12 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ? _buildHomeContent()
           : _currentIndex == 1
               ? AnalyticsScreen()
-              : Center(
-                  child: const Text(
-                    "Profile Page",
-                    style: TextStyle(color: Colors.white, fontSize: 18),
-                  ),
-                ),
+              : const ProfilePage(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         backgroundColor: const Color(0xFF4E5481),
