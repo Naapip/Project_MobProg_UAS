@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'login_screen2.dart';
-import 'create_account_screen.dart';
+import '/login/create_account_screen.dart';
 
 class LoginScreen1 extends StatelessWidget {
   @override

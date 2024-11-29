@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'home_screen.dart';
+import 'package:project_mobprog_uas/contract/contract.dart';
+import '../contract/contract.dart';
 
 class LoginScreen2 extends StatefulWidget {
   @override
@@ -32,7 +33,7 @@ class _LoginScreen2State extends State<LoginScreen2> {
 
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => HomeScreen()),
+          MaterialPageRoute(builder: (context) => ContractApp()),
           (Route<dynamic> route) => false);
     } on FirebaseAuthException catch (e) {
       setState(() {

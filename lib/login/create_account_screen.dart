@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-import 'login_screen1.dart';
+import '../login/login_screen1.dart';
 
 class CreateAccountScreen extends StatefulWidget {
   @override

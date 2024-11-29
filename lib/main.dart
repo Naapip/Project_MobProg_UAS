@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:flutteruas/home_screen.dart';
-import 'login_screen1.dart';
+import 'package:project_mobprog_uas/home/home_screen.dart';
+import 'login/login_screen1.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 Future main() async {
