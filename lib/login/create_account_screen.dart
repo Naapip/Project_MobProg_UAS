@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
 import '../login/login_screen1.dart';
 
 class CreateAccountScreen extends StatefulWidget {
@@ -23,6 +24,82 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
 
   bool _isValidPassword(String password) {
     return password.length >= 6;
+  }
+
+  Future<void> _createUserAccount() async {
+    final email = _emailController.text;
+    final password = _passwordController.text;
+    final name = _nameController.text;
+
+    bool isEmailValid = _isValidEmail(email);
+    bool isPasswordValid = _isValidPassword(password);
+
+    if (!isEmailValid) {
+      setState(() {
+        _emailError = 'Please enter a valid Email address.';
+      });
+    }
+
+    if (!isPasswordValid) {
+      setState(() {
+        _passwordError = 'Password must be at least 6 characters.';
+      });
+    }
+
+    if (isEmailValid && isPasswordValid) {
+      try {
+        // Create user with FirebaseAuth
+        UserCredential userCredential =
+            await _auth.createUserWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+
+        // Get the user ID from FirebaseAuth
+        String userId = userCredential.user!.uid;
+
+        // Save additional user information (name, etc.) in Firestore
+        await FirebaseFirestore.instance.collection('users').doc(userId).set({
+          'name': name,
+          'email': email,
+        });
+
+        // Sign out after successful registration (optional)
+        await _auth.signOut();
+
+        // Show success message and navigate back to login screen
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Account Created Successfully'),
+              content:
+                  Text('Your account has been created. You can now log in.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context); // Close dialog
+                    Navigator.pop(context); // Go back to LoginScreen1
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      } on FirebaseAuthException catch (e) {
+        String errorMessage = 'Registration failed. Please try again.';
+        if (e.code == 'email-already-in-use') {
+          errorMessage = 'Email is already in use. Please try another one.';
+        } else if (e.code == 'weak-password') {
+          errorMessage = 'Password is too weak.';
+        }
+
+        setState(() {
+          _emailError = errorMessage;
+        });
+      }
+    }
   }
 
   @override
@@ -133,76 +210,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
 
                   // Tombol Create Account
                   ElevatedButton(
-                    onPressed: () async {
-                      setState(() {
-                        _emailError = null;
-                        _passwordError = null;
-                      });
-
-                      final email = _emailController.text;
-                      final password = _passwordController.text;
-                      bool isEmailValid = _isValidEmail(email);
-                      bool isPasswordValid = _isValidPassword(password);
-
-                      if (!isEmailValid) {
-                        setState(() {
-                          _emailError = 'Please enter a valid Email address.';
-                        });
-                      }
-
-                      if (!isPasswordValid) {
-                        setState(() {
-                          _passwordError =
-                              'Password must be at least 6 characters.';
-                        });
-                      }
-
-                      if (isEmailValid && isPasswordValid) {
-                        try {
-                          await _auth.createUserWithEmailAndPassword(
-                            email: email,
-                            password: password,
-                          );
-
-                          // Tambahkan logout di sini setelah pembuatan akun berhasil
-                          await _auth.signOut();
-
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text('Account Created Successfully'),
-                                content: Text(
-                                    'Your account has been created. You can now log in.'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context); // Tutup dialog
-                                      Navigator.pop(
-                                          context); // Kembali ke LoginScreen1
-                                    },
-                                    child: Text('OK'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        } on FirebaseAuthException catch (e) {
-                          String errorMessage =
-                              'Registration failed. Please try again.';
-                          if (e.code == 'email-already-in-use') {
-                            errorMessage =
-                                'Email is already in use. Please try another one.';
-                          } else if (e.code == 'weak-password') {
-                            errorMessage = 'Password is too weak.';
-                          }
-
-                          setState(() {
-                            _emailError = errorMessage;
-                          });
-                        }
-                      }
-                    },
+                    onPressed: _createUserAccount,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.cyanAccent,
                       foregroundColor: Colors.black,

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:project_mobprog_uas/contract/contract.dart';
-import '../contract/contract.dart';
+import 'package:project_mobprog_uas/profile/profile.dart';
+import '/profile/profile.dart';
 
 class LoginScreen2 extends StatefulWidget {
   @override
@@ -26,15 +27,28 @@ class _LoginScreen2State extends State<LoginScreen2> {
         return;
       }
 
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      // Login dengan email dan password
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      Navigator.pushAndRemoveUntil(
+      // Ambil data pengguna
+      User? user = userCredential.user;
+
+      // Pastikan user tidak null
+      if (user != null) {
+        Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => ContractApp()),
-          (Route<dynamic> route) => false);
+          MaterialPageRoute(
+            builder: (context) => ContractApp(
+                // name: user.displayName ?? 'Guest', // Default ke 'Guest' jika null
+                // email: user.email ?? 'No email available',
+                ),
+          ),
+        );
+      }
     } on FirebaseAuthException catch (e) {
       setState(() {
         _errorMessage = e.message;
@@ -62,7 +76,6 @@ class _LoginScreen2State extends State<LoginScreen2> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // Teks judul dengan efek glow
                   Text(
                     "Log in to HabitHUB",
                     style: TextStyle(
@@ -80,8 +93,6 @@ class _LoginScreen2State extends State<LoginScreen2> {
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 10),
-
-                  // Teks deskripsi
                   Text(
                     "Welcome back! Sign in using your social account or email to continue with us",
                     style: TextStyle(
@@ -98,8 +109,6 @@ class _LoginScreen2State extends State<LoginScreen2> {
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 30),
-
-                  // Input Email
                   TextField(
                     controller: _emailController,
                     decoration: InputDecoration(
@@ -117,8 +126,6 @@ class _LoginScreen2State extends State<LoginScreen2> {
                     style: TextStyle(color: Colors.white),
                   ),
                   SizedBox(height: 15),
-
-                  // Input Password
                   TextField(
                     controller: _passwordController,
                     obscureText: true,
@@ -137,8 +144,6 @@ class _LoginScreen2State extends State<LoginScreen2> {
                     style: TextStyle(color: Colors.white),
                   ),
                   SizedBox(height: 20),
-
-                  // Menampilkan pesan error jika ada
                   if (_errorMessage != null)
                     Text(
                       _errorMessage!,
@@ -146,8 +151,6 @@ class _LoginScreen2State extends State<LoginScreen2> {
                       textAlign: TextAlign.center,
                     ),
                   SizedBox(height: 30),
-
-                  // Tombol Login dengan efek glow
                   ElevatedButton(
                     onPressed: _loginWithEmailPassword,
                     style: ElevatedButton.styleFrom(

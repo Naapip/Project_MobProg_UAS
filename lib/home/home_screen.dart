@@ -4,7 +4,6 @@ import 'package:project_mobprog_uas/login/login_screen1.dart';
 import 'package:project_mobprog_uas/profile/profile.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'fl_chart.dart';
-import 'package:project_mobprog_uas/profile/profile.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -36,6 +35,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Mendapatkan data pengguna dari FirebaseAuth
+    final user = FirebaseAuth.instance.currentUser;
+
     return Scaffold(
       backgroundColor: const Color(0xFF2A2D3E),
       appBar: AppBar(
@@ -62,7 +64,12 @@ class _HomeScreenState extends State<HomeScreen> {
           ? _buildHomeContent()
           : _currentIndex == 1
               ? AnalyticsScreen()
-              : const ProfilePage(),
+              : ProfilePage(
+                  name: user?.displayName ??
+                      "Unknown User", // Mengambil name dari Firebase
+                  email: user?.email ??
+                      "No email provided", // Mengambil email dari Firebase
+                ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         backgroundColor: const Color(0xFF4E5481),

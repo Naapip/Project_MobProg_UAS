@@ -4,11 +4,13 @@ import 'notifications.dart';
 import 'help.dart';
 import 'invite_friend.dart';
 import 'logout.dart';
-import 'personalInformation.dart'; // Import file Personal Information
-import 'privacy_settings.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+  final String name;
+  final String email;
+
+  const ProfilePage({Key? key, required this.name, required this.email})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,15 +22,19 @@ class ProfilePage extends StatelessWidget {
               Color(0xFF000000), // Hitam
               Color(0xFFC0C0C0), // Silver
             ],
-            begin: Alignment.topLeft, // Gradasi dari kiri atas
-            end: Alignment.bottomRight, // Gradasi ke kanan bawah
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
         ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: ListView(
             children: [
-              buildListTile('Account', context, AccountPage()),
+              buildListTile(
+                'Account',
+                context,
+                AccountPage(name: name, email: email), // Data diteruskan
+              ),
               buildListTile('Notifications', context, NotificationsPage()),
               buildListTile('Help', context, HelpPage()),
               buildListTile('Invite a friend', context, InviteFriendPage()),
@@ -60,7 +66,8 @@ class ProfilePage extends StatelessWidget {
           title,
           style: const TextStyle(color: Colors.white),
         ),
-        trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.white),
+        trailing:
+            const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.white),
         onTap: () {
           Navigator.push(
             context,
