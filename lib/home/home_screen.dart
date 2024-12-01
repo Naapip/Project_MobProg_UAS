@@ -4,6 +4,7 @@ import 'package:project_mobprog_uas/home/fl_chart.dart';
 import 'package:project_mobprog_uas/login/login_screen1.dart';
 import 'package:project_mobprog_uas/profile/profile.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:project_mobprog_uas/suggestions/screens/suggestions_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -66,6 +67,26 @@ class _HomeScreenState extends State<HomeScreen> {
                   name: user?.displayName ?? "Unknown User",
                   email: user?.email ?? "No email provided",
                 ), // Ganti konten ke Profile
+      floatingActionButton: _currentIndex ==
+              0 // Tampilkan tombol hanya pada tab Home
+          ? Padding(
+              padding: const EdgeInsets.only(
+                  bottom: 70.0), // Jarak dari BottomNavigationBar
+              child: FloatingActionButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SuggestionsPage()),
+                  );
+                },
+                backgroundColor: const Color(0xFF7F56D9), // Ungu gelap
+                child: const Icon(Icons.add, color: Colors.white),
+              ),
+            )
+          : null, // Tidak ada tombol pada tab lain
+      floatingActionButtonLocation: _currentIndex == 0
+          ? FloatingActionButtonLocation.endDocked
+          : null, // Lokasi hanya diatur jika tombol ada
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         backgroundColor: const Color(0xFFF8F8FF), // Background putih terang
