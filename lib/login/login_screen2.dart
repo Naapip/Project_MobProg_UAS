@@ -76,7 +76,7 @@ class _LoginScreen2State extends State<LoginScreen2> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    "Log in to HabitHUB",
+                    "Log in to T-Track",
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,

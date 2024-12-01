@@ -46,7 +46,7 @@ class _AccountPageState extends State<AccountPage> {
               const CircleAvatar(
                 radius: 60,
                 backgroundImage: AssetImage(
-                    'assets/meganfox.jpg'), // Ganti dengan gambar lain jika perlu
+                    'assets/default-avatar.jpg'), // Ganti dengan gambar lain jika perlu
               ),
               const SizedBox(height: 16),
               Text(

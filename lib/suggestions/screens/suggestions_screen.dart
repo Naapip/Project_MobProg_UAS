@@ -1,216 +1,121 @@
 import 'package:flutter/material.dart';
-import 'package:project_mobprog_uas/contract/contract.dart';
-import 'category_detail_screen.dart';
-import 'all_activities_screen.dart';
-import '../widgets/activity_card.dart';
-import '../widgets/section_header.dart';
 import 'package:project_mobprog_uas/newtask/newtask.dart';
 
 class SuggestionsPage extends StatelessWidget {
-  const SuggestionsPage({super.key});
-
   @override
   Widget build(BuildContext context) {
+    // Daftar aktivitas dengan kategori
+    final List<Map<String, dynamic>> activities = [
+      // Daily Routine
+      {
+        'name': 'Morning Exercise',
+        'description': 'Start your day with energy.',
+        'color': const Color(0xFFA5D6A7),
+        'isCompleted': false,
+        'category': 'Daily Routine',
+      },
+      {
+        'name': 'Breakfast',
+        'description': 'Have a healthy breakfast.',
+        'color': const Color(0xFFFFF59D),
+        'isCompleted': false,
+        'category': 'Daily Routine',
+      },
+      {
+        'name': 'Meditation',
+        'description': 'Relax your mind for the day.',
+        'color': const Color(0xFF81D4FA),
+        'isCompleted': false,
+        'category': 'Daily Routine',
+      },
+      {
+        'name': 'Clean Room',
+        'description': 'Start your day with a tidy room.',
+        'color': const Color(0xFFF48FB1),
+        'isCompleted': false,
+        'category': 'Daily Routine',
+      },
+      // Study Routine
+      {
+        'name': 'Attend Lecture',
+        'description': 'Learn something new.',
+        'color': const Color(0xFFB39DDB),
+        'isCompleted': false,
+        'category': 'Study Routine',
+      },
+      {
+        'name': 'Complete Assignment',
+        'description': 'Work on your assignments.',
+        'color': const Color(0xFF90CAF9),
+        'isCompleted': false,
+        'category': 'Study Routine',
+      },
+      {
+        'name': 'Review Notes',
+        'description': 'Revise what you learned.',
+        'color': const Color(0xFFFFAB91),
+        'isCompleted': false,
+        'category': 'Study Routine',
+      },
+      {
+        'name': 'Group Study',
+        'description': 'Collaborate with peers.',
+        'color': const Color(0xFFCE93D8),
+        'isCompleted': false,
+        'category': 'Study Routine',
+      },
+    ];
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Suggestions'),
+        title: const Text(
+          'Suggestions',
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: const Color(0xFFEEE5FF),
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(16.0),
-        children: [
-          // Section 1: Learn and Study More
-          SectionHeader(
-            title: "Learn and Study More",
-            onSeeAll: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const AllActivitiesScreen(
-                    category: "Learn and Study More",
-                    activities: ["Read", "Study"],
-                    color: Colors.yellow,
-                  ),
-                ),
-              );
-            },
-          ),
-          ActivityCard(
-            title: "Read",
-            description: "Stay hungry for knowledge.",
-            color: Colors.yellow,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const CategoryDetailScreen(
-                    activityName: "Read",
-                    details: [
-                      "Read 10 pages",
-                      "Summarize your reading",
-                      "Explore new genres"
-                    ],
-                    color: Colors.yellow,
-                  ),
-                ),
-              );
-            },
-          ),
-          ActivityCard(
-            title: "Study",
-            description: "Prepare to be your best version.",
-            color: Colors.green,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const CategoryDetailScreen(
-                    activityName: "Study",
-                    details: [
-                      "Review notes",
-                      "Take practice tests",
-                      "Watch tutorials"
-                    ],
-                    color: Colors.green,
-                  ),
-                ),
-              );
-            },
-          ),
-          const SizedBox(height: 16),
-
-          // Section 2: Exercise
-          SectionHeader(
-            title: "Exercise",
-            onSeeAll: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const AllActivitiesScreen(
-                    category: "Exercise",
-                    activities: ["Running", "Cycling"],
-                    color: Colors.blue,
-                  ),
-                ),
-              );
-            },
-          ),
-          ActivityCard(
-            title: "Running",
-            description: "Become your best version.",
-            color: Colors.blue,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const CategoryDetailScreen(
-                    activityName: "Running",
-                    details: [
-                      "Morning runs",
-                      "Interval training",
-                      "Stretch after runs"
-                    ],
-                    color: Colors.blue,
-                  ),
-                ),
-              );
-            },
-          ),
-          ActivityCard(
-            title: "Cycling",
-            description: "Enjoy a relaxing ride.",
-            color: Colors.pink,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const CategoryDetailScreen(
-                    activityName: "Cycling",
-                    details: [
-                      "Park rides",
-                      "Long-distance cycling",
-                      "Track routes"
-                    ],
-                    color: Colors.pink,
-                  ),
-                ),
-              );
-            },
-          ),
-          const SizedBox(height: 16),
-
-          // Section 3: Clean and Organize
-          SectionHeader(
-            title: "Clean and Organize",
-            onSeeAll: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const AllActivitiesScreen(
-                    category: "Clean and Organize",
-                    activities: ["Mop the house", "Clean the bathroom"],
-                    color: Colors.purple,
-                  ),
-                ),
-              );
-            },
-          ),
-          ActivityCard(
-            title: "Mop the house",
-            description: "Get your life together.",
-            color: Colors.yellow,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const CategoryDetailScreen(
-                    activityName: "Mop the house",
-                    details: [
-                      "Vacuum first",
-                      "Use scented cleaner",
-                      "Dry floors"
-                    ],
-                    color: Colors.yellow,
-                  ),
-                ),
-              );
-            },
-          ),
-          ActivityCard(
-            title: "Clean the bathroom",
-            description: "Keep it spotless.",
-            color: Colors.purple,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const CategoryDetailScreen(
-                    activityName: "Clean the bathroom",
-                    details: [
-                      "Scrub tiles",
-                      "Clean the sink",
-                      "Replace towels"
-                    ],
-                    color: Colors.purple,
-                  ),
-                ),
-              );
-            },
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => NewTaskPage(),
+      body: ListView.builder(
+        itemCount: activities.length,
+        itemBuilder: (context, index) {
+          // Mendapatkan aktivitas saat ini
+          final Map<String, dynamic> activity = activities[index];
+          return Card(
+            color: activity['color'],
+            margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            child: ListTile(
+              title: Text(
+                activity['name'],
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text(
+                '${activity['description']} (${activity['category']})',
+                style: const TextStyle(color: Colors.black54),
+              ),
+              onTap: () {
+                // Mengembalikan data aktivitas ke halaman sebelumnya
+                Navigator.pop(context, activity);
+              },
             ),
           );
         },
-        child: const Icon(Icons.add),
-        backgroundColor: Colors.blue,
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButton: Padding(
+      //   padding: const EdgeInsets.only(bottom: 16.0), // Jarak dari bawah
+      //   child: FloatingActionButton(
+      //     onPressed: () {
+      //       // Navigasi ke NewTaskPage
+      //       Navigator.push(
+      //         context,
+      //         MaterialPageRoute(builder: (context) => const NewTaskPage()),
+      //       );
+      //     },
+      //     backgroundColor: const Color(0xFF7F56D9), // Ungu gelap
+      //     child: const Icon(Icons.add, color: Colors.white),
+      //   ),
+      // ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

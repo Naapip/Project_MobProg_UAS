@@ -17,11 +17,11 @@ class PersonalInformationPage extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: ListView(
           children: [
-            _buildInfoCard('Name', 'Megan Fox', Icons.person),
-            _buildInfoCard('Email', 'meganfox666@gmail.com', Icons.email),
-            _buildInfoCard('Phone', '+1 666 888 999', Icons.phone),
-            _buildInfoCard('Address', 'Saint Mayers 178', Icons.home),
-            _buildInfoCard('Date of Birth', '12 Desember 1998', Icons.cake),
+            _buildInfoCard('Name', 'Unknown Users', Icons.person),
+            _buildInfoCard('Email', 'unknown.users@gmail.com', Icons.email),
+            _buildInfoCard('Phone', '+62 812345678910', Icons.phone),
+            _buildInfoCard('Address', 'Jl. Taman S Parman', Icons.home),
+            _buildInfoCard('Date of Birth', '5 May 2005', Icons.cake),
           ],
         ),
       ),

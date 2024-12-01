@@ -1,10 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project_mobprog_uas/home/fl_chart.dart';
-import 'package:project_mobprog_uas/login/login_screen1.dart';
 import 'package:project_mobprog_uas/profile/profile.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:project_mobprog_uas/suggestions/screens/suggestions_screen.dart';
+import 'package:project_mobprog_uas/newtask/newtask.dart'; // Halaman NewTask
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -16,86 +15,104 @@ class _HomeScreenState extends State<HomeScreen> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   String _selectedRoutine = 'All';
+  int _currentIndex = 0;
 
+  // Data aktivitas berdasarkan kategori
   Map<String, List<Map<String, dynamic>>> _activities = {
     'Daily Routine': [],
     'Study Routine': [],
     'All': [],
   };
 
-  int _currentIndex = 0; // Untuk mengontrol tab aktif
-
-  // Tambahkan daftar judul sesuai tab
+  // Daftar judul untuk BottomNavigationBar
   final List<String> _titles = ["Today", "Analytics", "Profile"];
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
-
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F8FF), // Background putih terang
+      backgroundColor: const Color(0xFFF8F8FF),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFEEE5FF), // Ungu pastel
+        backgroundColor: const Color(0xFFEEE5FF),
         elevation: 0,
         title: Text(
-          _titles[_currentIndex], // Judul berubah sesuai tab
-          style: const TextStyle(color: Colors.black), // Hitam untuk kontras
+          _titles[_currentIndex],
+          style: const TextStyle(color: Colors.black),
         ),
         centerTitle: true,
-        actions: [
-          if (_currentIndex == 0) // Tampilkan logout hanya di tab Today
-            IconButton(
-              icon: const Icon(Icons.logout,
-                  color: Color(0xFF7F56D9)), // Ungu lebih gelap
-              onPressed: () async {
-                await FirebaseAuth.instance.signOut();
-                if (mounted) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginScreen1()),
-                  );
-                }
-              },
-            ),
-        ],
       ),
       body: _currentIndex == 0
           ? _buildHomeContent()
           : _currentIndex == 1
-              ? AnalyticsScreen() // Ganti konten ke Analytics
+              ? AnalyticsScreen()
               : ProfilePage(
-                  name: user?.displayName ?? "Unknown User",
-                  email: user?.email ?? "No email provided",
-                ), // Ganti konten ke Profile
-      floatingActionButton: _currentIndex ==
-              0 // Tampilkan tombol hanya pada tab Home
+                  name: "User Name",
+                  email: "user@example.com",
+                ),
+      floatingActionButton: _currentIndex == 0
           ? Padding(
-              padding: const EdgeInsets.only(
-                  bottom: 70.0), // Jarak dari BottomNavigationBar
+              padding: const EdgeInsets.only(bottom: 10.0),
               child: FloatingActionButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SuggestionsPage()),
-                  );
+                onPressed: () async {
+                  // Pilih antara NewTask atau Suggestions
+                  final action = await _showActionDialog(context);
+
+                  if (action != null) {
+                    if (action == 'NewTask') {
+                      final newActivity = await Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => NewTaskPage()),
+                      );
+
+                      if (newActivity != null && mounted) {
+                        setState(() {
+                          final category = newActivity['category'] ?? 'All';
+                          // Cek apakah aktivitas sudah ada sebelum ditambahkan
+                          if (!_activityExists(newActivity, category)) {
+                            _activities[category]!.add(newActivity);
+                            // Tambahkan ke kategori "All" jika belum ada
+                            if (!_activityExists(newActivity, 'All')) {
+                              _activities['All']!.add(newActivity);
+                            }
+                          }
+                        });
+                      }
+                    } else if (action == 'Suggestions') {
+                      final newActivity = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SuggestionsPage()),
+                      );
+
+                      if (newActivity != null && mounted) {
+                        setState(() {
+                          final category = newActivity['category'] ?? 'All';
+                          // Cek apakah aktivitas sudah ada sebelum ditambahkan
+                          if (!_activityExists(newActivity, category)) {
+                            _activities[category]!.add(newActivity);
+                            // Tambahkan ke kategori "All" jika belum ada
+                            if (!_activityExists(newActivity, 'All')) {
+                              _activities['All']!.add(newActivity);
+                            }
+                          }
+                        });
+                      }
+                    }
+                  }
                 },
-                backgroundColor: const Color(0xFF7F56D9), // Ungu gelap
-                child: const Icon(Icons.add, color: Colors.white),
+                child: const Icon(Icons.add),
+                backgroundColor: const Color(0xFF7F56D9),
               ),
             )
-          : null, // Tidak ada tombol pada tab lain
-      floatingActionButtonLocation: _currentIndex == 0
-          ? FloatingActionButtonLocation.endDocked
-          : null, // Lokasi hanya diatur jika tombol ada
+          : null,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        backgroundColor: const Color(0xFFF8F8FF), // Background putih terang
-        selectedItemColor: const Color(0xFF7F56D9), // Ungu gelap
-        unselectedItemColor:
-            const Color(0xFFA5A5A5), // Abu-abu untuk ikon tidak aktif
+        backgroundColor: const Color(0xFFF8F8FF),
+        selectedItemColor: const Color(0xFF7F56D9),
+        unselectedItemColor: const Color(0xFFA5A5A5),
         onTap: (index) {
           setState(() {
-            _currentIndex = index; // Perbarui index aktif
+            _currentIndex = index;
           });
         },
         items: const [
@@ -116,6 +133,33 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // Metode untuk menampilkan dialog pilihan task
+  Future<String?> _showActionDialog(BuildContext context) {
+    return showDialog<String>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Pilih Aksi"),
+          content: const Text("Di mana Anda ingin menambahkan task?"),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop('NewTask');
+              },
+              child: const Text("New Task"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop('Suggestions');
+              },
+              child: const Text("Suggestions"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Widget _buildHomeContent() {
     return Column(
       children: [
@@ -123,13 +167,11 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
           child: GestureDetector(
             onTap: () {
-              if (mounted) {
-                setState(() {
-                  _calendarFormat = _calendarFormat == CalendarFormat.week
-                      ? CalendarFormat.month
-                      : CalendarFormat.week;
-                });
-              }
+              setState(() {
+                _calendarFormat = _calendarFormat == CalendarFormat.week
+                    ? CalendarFormat.month
+                    : CalendarFormat.week;
+              });
             },
             child: TableCalendar(
               firstDay: DateTime.utc(2000, 1, 1),
@@ -138,47 +180,37 @@ class _HomeScreenState extends State<HomeScreen> {
               calendarFormat: _calendarFormat,
               selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
               onDaySelected: (selectedDay, focusedDay) {
-                if (mounted) {
-                  setState(() {
-                    _selectedDay = selectedDay;
-                    _focusedDay = focusedDay;
-                  });
-                }
+                setState(() {
+                  _selectedDay = selectedDay;
+                  _focusedDay = focusedDay;
+                });
               },
-              calendarStyle: CalendarStyle(
+              calendarStyle: const CalendarStyle(
                 todayDecoration: BoxDecoration(
-                  color: const Color(0xFFD1C4E9), // Ungu terang untuk hari ini
+                  color: Color(0xFFD1C4E9),
                   shape: BoxShape.circle,
                 ),
                 selectedDecoration: BoxDecoration(
-                  color: const Color(
-                      0xFF7F56D9), // Ungu gelap untuk hari yang dipilih
+                  color: Color(0xFF7F56D9),
                   shape: BoxShape.circle,
                 ),
-                defaultTextStyle: const TextStyle(color: Colors.black),
-                weekendTextStyle: const TextStyle(color: Color(0xFF7F56D9)),
               ),
               headerStyle: const HeaderStyle(
                 formatButtonVisible: false,
                 titleCentered: true,
-                titleTextStyle: TextStyle(color: Colors.black, fontSize: 16),
               ),
             ),
           ),
         ),
-        const SizedBox(height: 20),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _buildChoiceChip("All"),
-              const SizedBox(width: 10),
-              _buildChoiceChip("Daily Routine"),
-              const SizedBox(width: 10),
-              _buildChoiceChip("Study Routine"),
-            ],
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _buildChoiceChip('All'),
+            const SizedBox(width: 10),
+            _buildChoiceChip('Daily Routine'),
+            const SizedBox(width: 10),
+            _buildChoiceChip('Study Routine'),
+          ],
         ),
         const SizedBox(height: 20),
         Expanded(
@@ -186,10 +218,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ? const Center(
                   child: Text(
                     "Nothing here yet...",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Color(0xFFA5A5A5),
-                        fontSize: 16), // Abu-abu untuk teks kosong
+                    style: TextStyle(color: Colors.grey, fontSize: 16),
                   ),
                 )
               : ListView.builder(
@@ -198,42 +227,30 @@ class _HomeScreenState extends State<HomeScreen> {
                     final activity = _activities[_selectedRoutine]![index];
                     return Card(
                       color: activity['color'],
-                      margin: const EdgeInsets.symmetric(vertical: 8),
                       child: ListTile(
                         title: Text(
                           activity['name'],
                           style: TextStyle(
-                            color: activity['isCompleted']
-                                ? Colors.grey
-                                : Colors.black,
                             decoration: activity['isCompleted']
                                 ? TextDecoration.lineThrough
                                 : TextDecoration.none,
                           ),
                         ),
-                        subtitle: Text(
-                          activity['description'],
-                          style: const TextStyle(color: Colors.black54),
-                        ),
+                        subtitle: Text(activity['description']),
                         leading: Checkbox(
                           value: activity['isCompleted'],
-                          onChanged: (bool? value) {
-                            if (mounted) {
-                              setState(() {
-                                activity['isCompleted'] = value ?? false;
-                              });
-                            }
+                          onChanged: (value) {
+                            setState(() {
+                              activity['isCompleted'] = value ?? false;
+                            });
                           },
                         ),
                         trailing: IconButton(
                           icon: const Icon(Icons.delete, color: Colors.red),
                           onPressed: () {
-                            if (mounted) {
-                              setState(() {
-                                _activities[_selectedRoutine]!.removeAt(index);
-                                _activities['All']!.removeAt(index);
-                              });
-                            }
+                            setState(() {
+                              _removeActivityFromAllCategories(activity);
+                            });
                           },
                         ),
                       ),
@@ -249,18 +266,25 @@ class _HomeScreenState extends State<HomeScreen> {
     return ChoiceChip(
       label: Text(label),
       selected: _selectedRoutine == label,
-      backgroundColor: const Color(0xFFEEE5FF), // Ungu pastel
-      selectedColor: const Color(0xFF7F56D9), // Ungu gelap
-      labelStyle: TextStyle(
-        color: _selectedRoutine == label ? Colors.white : Colors.black,
-      ),
-      onSelected: (bool selected) {
-        if (mounted) {
-          setState(() {
-            _selectedRoutine = label;
-          });
-        }
+      onSelected: (selected) {
+        setState(() {
+          _selectedRoutine = label;
+        });
       },
     );
+  }
+
+  // Fungsi untuk memeriksa apakah activity sudah ada
+  bool _activityExists(Map<String, dynamic> activity, String category) {
+    return _activities[category]
+            ?.any((item) => item['name'] == activity['name']) ??
+        false;
+  }
+
+  // Fungsi untuk menghapus task dari semua kategori
+  void _removeActivityFromAllCategories(Map<String, dynamic> activity) {
+    _activities.forEach((category, activitiesList) {
+      activitiesList.removeWhere((item) => item['name'] == activity['name']);
+    });
   }
 }
