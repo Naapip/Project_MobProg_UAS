@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:project_mobprog_uas/contract/contract.dart';
 import 'category_detail_screen.dart';
 import 'all_activities_screen.dart';
 import '../widgets/activity_card.dart';
 import '../widgets/section_header.dart';
+import 'package:project_mobprog_uas/newtask/newtask.dart';
 
 class SuggestionsPage extends StatelessWidget {
   const SuggestionsPage({super.key});
@@ -196,6 +198,19 @@ class SuggestionsPage extends StatelessWidget {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => NewTaskPage(),
+            ),
+          );
+        },
+        child: const Icon(Icons.add),
+        backgroundColor: Colors.blue,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
