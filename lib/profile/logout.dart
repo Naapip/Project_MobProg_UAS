@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:project_mobprog_uas/login/login_screen1.dart';
-import '../profile/logout.dart';
 
 class LogoutPage extends StatelessWidget {
   @override
@@ -9,9 +8,12 @@ class LogoutPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Logout',
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black), // Teks hitam di AppBar
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.black), // Ganti teks warna hitam
         ),
-        backgroundColor: Colors.white, // Latar belakang putih pada AppBar
+        backgroundColor:
+            Color(0xFFEADCF8), // Ungu pastel yang sama dengan halaman akun
         elevation: 0,
       ),
       body: Padding(
@@ -24,7 +26,7 @@ class LogoutPage extends StatelessWidget {
             Icon(
               Icons.exit_to_app,
               size: 80,
-              color: Colors.black, // Menggunakan warna hitam untuk ikon
+              color: Color(0xFF9E87C5), // Warna ungu tua pastel untuk ikon
             ),
             SizedBox(height: 20),
             Text(
@@ -32,7 +34,7 @@ class LogoutPage extends StatelessWidget {
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
-                color: Colors.black, // Menggunakan warna hitam untuk teks
+                color: Colors.black, // Teks hitam untuk pertanyaan logout
               ),
               textAlign: TextAlign.center,
             ),
@@ -66,7 +68,8 @@ class LogoutPage extends StatelessWidget {
                 ),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.black, // Tombol dengan background hitam
+                backgroundColor:
+                    Color(0xFF9E87C5), // Ungu tua pastel untuk tombol
                 padding: EdgeInsets.symmetric(horizontal: 40, vertical: 14),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
@@ -78,13 +81,15 @@ class LogoutPage extends StatelessWidget {
             // Tombol untuk Membatalkan Logout
             TextButton(
               onPressed: () {
-                Navigator.pop(context); // Kembali ke halaman sebelumnya jika membatalkan logout
+                Navigator.pop(
+                    context); // Kembali ke halaman sebelumnya jika membatalkan logout
               },
               child: Text(
                 'Cancel',
                 style: TextStyle(
                   fontSize: 16,
-                  color: Colors.black, // Warna teks Cancel dengan hitam
+                  color: Color(
+                      0xFF9E87C5), // Teks Cancel dengan warna ungu tua pastel
                 ),
               ),
             ),

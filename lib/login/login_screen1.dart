@@ -12,9 +12,10 @@ class LoginScreen1 extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color(0xFF2A2D3E),
-              Color(0xFF4E5481)
-            ], // Warna gelap untuk tampilan game
+              Color(0xFFB9E4FE), // Biru muda
+              Color(0xFFD6BBF3), // Ungu lembut
+              Color(0xFFFFFFFF), // Putih
+            ],
           ),
         ),
         child: SafeArea(
@@ -31,15 +32,8 @@ class LoginScreen1 extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 34,
                       fontWeight: FontWeight.bold,
-                      color: Colors.cyanAccent,
+                      color: Colors.black,
                       height: 1.3,
-                      shadows: [
-                        Shadow(
-                          offset: Offset(3, 3),
-                          blurRadius: 5.0,
-                          color: Colors.black87,
-                        ),
-                      ],
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -48,20 +42,13 @@ class LoginScreen1 extends StatelessWidget {
                     "Your tasks, your rules, our support.",
                     style: TextStyle(
                       fontSize: 16,
-                      color: Colors.white70,
-                      shadows: [
-                        Shadow(
-                          offset: Offset(2, 2),
-                          blurRadius: 3.0,
-                          color: Colors.black54,
-                        ),
-                      ],
+                      color: Colors.black54,
                     ),
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 40),
 
-                  // Tombol Login dengan efek glow
+                  // Tombol Login
                   ElevatedButton(
                     onPressed: () {
                       Navigator.push(
@@ -70,15 +57,15 @@ class LoginScreen1 extends StatelessWidget {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.cyanAccent,
+                      backgroundColor: Colors.white,
                       foregroundColor: Colors.black,
                       padding:
                           EdgeInsets.symmetric(vertical: 15, horizontal: 100),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      elevation: 10,
-                      shadowColor: Colors.cyanAccent.withOpacity(0.5),
+                      elevation: 5,
+                      shadowColor: Colors.black.withOpacity(0.2),
                     ),
                     child: Text(
                       "Login",
@@ -102,7 +89,7 @@ class LoginScreen1 extends StatelessWidget {
                     child: Text(
                       "Create an account",
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black87,
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
@@ -114,18 +101,18 @@ class LoginScreen1 extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     child: Row(
                       children: [
-                        Expanded(child: Divider(color: Colors.white30)),
+                        Expanded(child: Divider(color: Colors.black26)),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: Text(
                             "OR",
                             style: TextStyle(
-                              color: Colors.white70,
+                              color: Colors.black54,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
-                        Expanded(child: Divider(color: Colors.white30)),
+                        Expanded(child: Divider(color: Colors.black26)),
                       ],
                     ),
                   ),

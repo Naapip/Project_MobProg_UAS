@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:project_mobprog_uas/home/fl_chart.dart';
 import 'package:project_mobprog_uas/login/login_screen1.dart';
 import 'package:project_mobprog_uas/profile/profile.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'fl_chart.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -16,68 +16,65 @@ class _HomeScreenState extends State<HomeScreen> {
   DateTime? _selectedDay;
   String _selectedRoutine = 'All';
 
-  final List<String> _defaultSuggestions = [
-    "Read",
-    "Study",
-    "Running",
-    "Cycling",
-    "Mop the house",
-    "Clean the bathroom"
-  ];
-
   Map<String, List<Map<String, dynamic>>> _activities = {
     'Daily Routine': [],
     'Study Routine': [],
     'All': [],
   };
 
-  int _currentIndex = 0;
+  int _currentIndex = 0; // Untuk mengontrol tab aktif
+
+  // Tambahkan daftar judul sesuai tab
+  final List<String> _titles = ["Today", "Analytics", "Profile"];
 
   @override
   Widget build(BuildContext context) {
-    // Mendapatkan data pengguna dari FirebaseAuth
     final user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF2A2D3E),
+      backgroundColor: const Color(0xFFF8F8FF), // Background putih terang
       appBar: AppBar(
-        backgroundColor: const Color(0xFF4E5481),
+        backgroundColor: const Color(0xFFEEE5FF), // Ungu pastel
         elevation: 0,
-        title: const Text("Today", style: TextStyle(color: Colors.white)),
+        title: Text(
+          _titles[_currentIndex], // Judul berubah sesuai tab
+          style: const TextStyle(color: Colors.black), // Hitam untuk kontras
+        ),
         centerTitle: true,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.logout, color: Colors.cyanAccent),
-            onPressed: () async {
-              await FirebaseAuth.instance.signOut();
-              if (mounted) {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginScreen1()),
-                );
-              }
-            },
-          ),
+          if (_currentIndex == 0) // Tampilkan logout hanya di tab Today
+            IconButton(
+              icon: const Icon(Icons.logout,
+                  color: Color(0xFF7F56D9)), // Ungu lebih gelap
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+                if (mounted) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginScreen1()),
+                  );
+                }
+              },
+            ),
         ],
       ),
       body: _currentIndex == 0
           ? _buildHomeContent()
           : _currentIndex == 1
-              ? AnalyticsScreen()
+              ? AnalyticsScreen() // Ganti konten ke Analytics
               : ProfilePage(
-                  name: user?.displayName ??
-                      "Unknown User", // Mengambil name dari Firebase
-                  email: user?.email ??
-                      "No email provided", // Mengambil email dari Firebase
-                ),
+                  name: user?.displayName ?? "Unknown User",
+                  email: user?.email ?? "No email provided",
+                ), // Ganti konten ke Profile
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        backgroundColor: const Color(0xFF4E5481),
-        selectedItemColor: Colors.cyanAccent,
-        unselectedItemColor: Colors.white,
+        backgroundColor: const Color(0xFFF8F8FF), // Background putih terang
+        selectedItemColor: const Color(0xFF7F56D9), // Ungu gelap
+        unselectedItemColor:
+            const Color(0xFFA5A5A5), // Abu-abu untuk ikon tidak aktif
         onTap: (index) {
           setState(() {
-            _currentIndex = index;
+            _currentIndex = index; // Perbarui index aktif
           });
         },
         items: const [
@@ -127,22 +124,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   });
                 }
               },
-              calendarStyle: const CalendarStyle(
+              calendarStyle: CalendarStyle(
                 todayDecoration: BoxDecoration(
-                  color: Colors.cyanAccent,
+                  color: const Color(0xFFD1C4E9), // Ungu terang untuk hari ini
                   shape: BoxShape.circle,
                 ),
                 selectedDecoration: BoxDecoration(
-                  color: Colors.deepPurple,
+                  color: const Color(
+                      0xFF7F56D9), // Ungu gelap untuk hari yang dipilih
                   shape: BoxShape.circle,
                 ),
-                defaultTextStyle: TextStyle(color: Colors.white),
-                weekendTextStyle: TextStyle(color: Colors.cyanAccent),
+                defaultTextStyle: const TextStyle(color: Colors.black),
+                weekendTextStyle: const TextStyle(color: Color(0xFF7F56D9)),
               ),
               headerStyle: const HeaderStyle(
                 formatButtonVisible: false,
                 titleCentered: true,
-                titleTextStyle: TextStyle(color: Colors.white, fontSize: 16),
+                titleTextStyle: TextStyle(color: Colors.black, fontSize: 16),
               ),
             ),
           ),
@@ -166,9 +164,11 @@ class _HomeScreenState extends State<HomeScreen> {
           child: _activities[_selectedRoutine]?.isEmpty ?? true
               ? const Center(
                   child: Text(
-                    "No activities added yet.\nTap + to add activities!",
+                    "Nothing here yet...",
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.grey, fontSize: 16),
+                    style: TextStyle(
+                        color: Color(0xFFA5A5A5),
+                        fontSize: 16), // Abu-abu untuk teks kosong
                   ),
                 )
               : ListView.builder(
@@ -228,6 +228,11 @@ class _HomeScreenState extends State<HomeScreen> {
     return ChoiceChip(
       label: Text(label),
       selected: _selectedRoutine == label,
+      backgroundColor: const Color(0xFFEEE5FF), // Ungu pastel
+      selectedColor: const Color(0xFF7F56D9), // Ungu gelap
+      labelStyle: TextStyle(
+        color: _selectedRoutine == label ? Colors.white : Colors.black,
+      ),
       onSelected: (bool selected) {
         if (mounted) {
           setState(() {

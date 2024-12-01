@@ -5,8 +5,12 @@ class PersonalInformationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Personal Information', style: TextStyle(color: Colors.black)),
-        backgroundColor: Colors.white, // Ganti background AppBar menjadi putih
+        title: const Text(
+          'Personal Information',
+          style: TextStyle(color: Colors.black),
+        ),
+        centerTitle: true,
+        backgroundColor: const Color(0xFFEADCF8), // Ungu pastel
         elevation: 0,
       ),
       body: Padding(
@@ -21,25 +25,31 @@ class PersonalInformationPage extends StatelessWidget {
           ],
         ),
       ),
-      backgroundColor: Colors.white, // Ganti background halaman menjadi putih
+      backgroundColor: const Color(0xFFEADCF8), // Latar belakang ungu pastel
     );
   }
 
   Widget _buildInfoCard(String label, String value, IconData icon) {
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 8),
+      margin: const EdgeInsets.symmetric(vertical: 8),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
       elevation: 3,
-      color: Colors.white, // Ganti background card menjadi putih
+      color: const Color(0xFFFFFFFF), // Warna kartu tetap putih
       child: ListTile(
-        leading: Icon(icon, color: Colors.black), // Ganti warna ikon menjadi hitam
+        leading: Icon(icon, color: const Color(0xFF6A4A86)), // Ikon ungu tua
         title: Text(
           label,
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black), // Teks hitam
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.black, // Teks hitam
+          ),
         ),
-        subtitle: Text(value, style: TextStyle(color: Colors.grey)), // Teks abu-abu untuk subtitel
+        subtitle: Text(
+          value,
+          style: const TextStyle(color: Colors.grey), // Teks subtitel abu-abu
+        ),
       ),
     );
   }

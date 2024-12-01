@@ -34,7 +34,8 @@ class _AccountPageState extends State<AccountPage> {
           'Account',
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
         ),
-        backgroundColor: Colors.white,
+        centerTitle: true,
+        backgroundColor: const Color(0xFFEADCF8), // Ungu pastel
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -84,15 +85,17 @@ class _AccountPageState extends State<AccountPage> {
                 label: const Text('Edit Profile',
                     style: TextStyle(color: Colors.white)),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
+                  backgroundColor: const Color(0xFF9E87C5), // Ungu tua pastel
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                 ),
               ),
               const SizedBox(height: 16),
-              const Divider(color: Colors.black),
+              const Divider(
+                  color: Colors.black54), // Garis pemisah lebih terang
               ListTile(
-                leading: const Icon(Icons.person_outline, color: Colors.black),
+                leading: const Icon(Icons.person_outline,
+                    color: Color(0xFF6A4A86)), // Ungu tua
                 title: const Text('Personal Information',
                     style: TextStyle(color: Colors.black)),
                 subtitle: const Text('Update your personal details',
@@ -108,7 +111,8 @@ class _AccountPageState extends State<AccountPage> {
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.lock_outline, color: Colors.black),
+                leading: const Icon(Icons.lock_outline,
+                    color: Color(0xFF6A4A86)), // Ungu tua
                 title: const Text('Privacy Settings',
                     style: TextStyle(color: Colors.black)),
                 subtitle: const Text('Manage your privacy options',
@@ -128,7 +132,7 @@ class _AccountPageState extends State<AccountPage> {
           ),
         ),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFEADCF8), // Latar belakang ungu pastel
     );
   }
 }

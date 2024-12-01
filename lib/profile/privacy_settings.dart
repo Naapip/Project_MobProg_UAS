@@ -14,8 +14,12 @@ class _PrivacySettingsPageState extends State<PrivacySettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Privacy Settings', style: TextStyle(color: Colors.black)), // Text hitam di AppBar
-        backgroundColor: Colors.white, // Background putih untuk AppBar
+        title: const Text(
+          'Privacy Settings',
+          style: TextStyle(color: Colors.black), // Text hitam di AppBar
+        ),
+        backgroundColor:
+            const Color(0xFFEADCF8), // Background ungu pastel untuk AppBar
         elevation: 0,
       ),
       body: Padding(
@@ -52,12 +56,12 @@ class _PrivacySettingsPageState extends State<PrivacySettingsPage> {
                 });
               },
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             _buildSaveButton(),
           ],
         ),
       ),
-      backgroundColor: Colors.white, // Background halaman putih
+      backgroundColor: const Color(0xFFEADCF8), // Background ungu pastel
     );
   }
 
@@ -81,18 +85,19 @@ class _PrivacySettingsPageState extends State<PrivacySettingsPage> {
         ],
       ),
       child: ListTile(
-        leading: Icon(
+        leading: const Icon(
           Icons.lock,
           color: Colors.black, // Ikon hitam
         ),
         title: Text(
           title,
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.black, // Teks hitam
           ),
         ),
-        subtitle: Text(subtitle, style: TextStyle(color: Colors.grey)), // Subteks abu-abu
+        subtitle: Text(subtitle,
+            style: const TextStyle(color: Colors.grey)), // Subteks abu-abu
         trailing: Switch(
           value: value,
           onChanged: onChanged,
@@ -105,7 +110,7 @@ class _PrivacySettingsPageState extends State<PrivacySettingsPage> {
   Widget _buildSaveButton() {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        foregroundColor: Colors.white, 
+        foregroundColor: Colors.white,
         backgroundColor: Colors.black, // Background tombol hitam
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
@@ -114,13 +119,16 @@ class _PrivacySettingsPageState extends State<PrivacySettingsPage> {
       onPressed: () {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Your privacy settings have been saved!', style: TextStyle(color: Colors.white)),
+            content: const Text(
+              'Your privacy settings have been saved!',
+              style: TextStyle(color: Colors.white),
+            ),
             backgroundColor: Colors.black, // Background snack bar hitam
           ),
         );
       },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12.0),
+      child: const Padding(
+        padding: EdgeInsets.symmetric(vertical: 12.0),
         child: Text(
           'Save Settings',
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),

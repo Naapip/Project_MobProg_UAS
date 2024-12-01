@@ -5,11 +5,14 @@ class UpdateAvailablePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Update Available',
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black), // Teks hitam di AppBar
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.black), // Teks hitam di AppBar
         ),
-        backgroundColor: Colors.white, // Latar belakang putih pada AppBar
+        backgroundColor:
+            const Color(0xFFEADCF8), // Background ungu pastel pada AppBar
         elevation: 0,
       ),
       body: Padding(
@@ -17,7 +20,7 @@ class UpdateAvailablePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'A new update is ready to install. Please update to the latest version.',
               style: TextStyle(
                 fontSize: 18,
@@ -25,14 +28,17 @@ class UpdateAvailablePage extends StatelessWidget {
                 color: Colors.black, // Teks hitam untuk deskripsi
               ),
             ),
-            SizedBox(height: 16),
-            Text(
+            const SizedBox(height: 16),
+            const Text(
               'The update includes new features, bug fixes, and performance improvements. Make sure you are connected to Wi-Fi before starting the download.',
-              style: TextStyle(fontSize: 16, color: Colors.black87), // Teks hitam dengan opacity
+              style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black87), // Teks hitam dengan opacity
             ),
-            SizedBox(height: 32),
-            Icon(Icons.system_update, size: 100, color: Colors.black), // Ikon hitam
-            Spacer(),
+            const SizedBox(height: 32),
+            const Icon(Icons.system_update,
+                size: 100, color: Colors.black), // Ikon hitam
+            const Spacer(),
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context); // Kembali ke halaman sebelumnya
@@ -40,7 +46,7 @@ class UpdateAvailablePage extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.black, // Latar belakang tombol hitam
               ),
-              child: Text(
+              child: const Text(
                 'Back to Notifications',
                 style: TextStyle(color: Colors.white), // Teks putih pada tombol
               ),
@@ -48,7 +54,8 @@ class UpdateAvailablePage extends StatelessWidget {
           ],
         ),
       ),
-      backgroundColor: Colors.white, // Latar belakang putih untuk halaman
+      backgroundColor:
+          const Color(0xFFEADCF8), // Background ungu pastel untuk halaman
     );
   }
 }

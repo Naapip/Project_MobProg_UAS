@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:project_mobprog_uas/contract/contract.dart';
-import 'package:project_mobprog_uas/profile/profile.dart';
-import '/profile/profile.dart';
 
 class LoginScreen2 extends StatefulWidget {
   @override
@@ -42,10 +40,7 @@ class _LoginScreen2State extends State<LoginScreen2> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => ContractApp(
-                // name: user.displayName ?? 'Guest', // Default ke 'Guest' jika null
-                // email: user.email ?? 'No email available',
-                ),
+            builder: (context) => ContractApp(),
           ),
         );
       }
@@ -64,7 +59,11 @@ class _LoginScreen2State extends State<LoginScreen2> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFF2A2D3E), Color(0xFF4E5481)],
+            colors: [
+              Color(0xFFB9E4FE), // Biru muda
+              Color(0xFFD6BBF3), // Ungu lembut
+              Color(0xFFFFFFFF), // Putih
+            ],
           ),
         ),
         child: SafeArea(
@@ -81,87 +80,76 @@ class _LoginScreen2State extends State<LoginScreen2> {
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: Colors.cyanAccent,
-                      shadows: [
-                        Shadow(
-                          offset: Offset(3, 3),
-                          blurRadius: 5.0,
-                          color: Colors.black87,
-                        ),
-                      ],
+                      color: Colors.black,
                     ),
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 10),
                   Text(
-                    "Welcome back! Sign in using your social account or email to continue with us",
+                    "Welcome back! Sign in using your email to continue.",
                     style: TextStyle(
                       fontSize: 16,
-                      color: Colors.white70,
-                      shadows: [
-                        Shadow(
-                          offset: Offset(2, 2),
-                          blurRadius: 3.0,
-                          color: Colors.black54,
-                        ),
-                      ],
+                      color: Colors.black87,
                     ),
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 30),
+
+                  // Input Email
                   TextField(
                     controller: _emailController,
                     decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white.withOpacity(0.3),
                       labelText: 'Email',
-                      labelStyle: TextStyle(color: Colors.white70),
+                      filled: true,
+                      fillColor: Colors.white.withOpacity(0.8),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide.none,
                       ),
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                     ),
-                    style: TextStyle(color: Colors.white),
                   ),
                   SizedBox(height: 15),
+
+                  // Input Password
                   TextField(
                     controller: _passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white.withOpacity(0.3),
                       labelText: 'Password',
-                      labelStyle: TextStyle(color: Colors.white70),
+                      filled: true,
+                      fillColor: Colors.white.withOpacity(0.8),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide.none,
                       ),
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                     ),
-                    style: TextStyle(color: Colors.white),
                   ),
                   SizedBox(height: 20),
+
+                  // Error Message
                   if (_errorMessage != null)
                     Text(
                       _errorMessage!,
-                      style: TextStyle(color: Colors.redAccent),
+                      style: TextStyle(
+                        color: Colors.redAccent,
+                        fontWeight: FontWeight.bold,
+                      ),
                       textAlign: TextAlign.center,
                     ),
-                  SizedBox(height: 30),
+                  SizedBox(height: 20),
+
+                  // Tombol Login
                   ElevatedButton(
                     onPressed: _loginWithEmailPassword,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.cyanAccent,
+                      backgroundColor: Colors.white,
                       foregroundColor: Colors.black,
                       padding: EdgeInsets.symmetric(vertical: 15),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      elevation: 10,
-                      shadowColor: Colors.cyanAccent.withOpacity(0.5),
+                      elevation: 5,
+                      shadowColor: Colors.black.withOpacity(0.2),
                     ),
                     child: Text(
                       "Login",
@@ -171,6 +159,7 @@ class _LoginScreen2State extends State<LoginScreen2> {
                       ),
                     ),
                   ),
+                  SizedBox(height: 20),
                 ],
               ),
             ),

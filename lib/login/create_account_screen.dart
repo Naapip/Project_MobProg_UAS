@@ -111,7 +111,11 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFF2A2D3E), Color(0xFF4E5481)],
+            colors: [
+              Color(0xFFB9E4FE), // Biru muda
+              Color(0xFFD6BBF3), // Ungu lembut
+              Color(0xFFFFFFFF), // Putih
+            ],
           ),
         ),
         child: SafeArea(
@@ -123,18 +127,12 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    'Create Account in T-TRACK',
+                    'Create Account',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: Colors.cyanAccent,
-                      shadows: [
-                        Shadow(
-                          offset: Offset(3, 3),
-                          blurRadius: 5.0,
-                          color: Colors.black87,
-                        ),
-                      ],
+                      color: Colors.black,
+                      height: 1.5,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -143,14 +141,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     'Create your account using your email to get started',
                     style: TextStyle(
                       fontSize: 16,
-                      color: Colors.white70,
-                      shadows: [
-                        Shadow(
-                          offset: Offset(2, 2),
-                          blurRadius: 3.0,
-                          color: Colors.black54,
-                        ),
-                      ],
+                      color: Colors.black54,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -162,13 +153,12 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     decoration: InputDecoration(
                       labelText: 'Name',
                       filled: true,
-                      fillColor: Colors.white.withOpacity(0.3),
+                      fillColor: Colors.white.withOpacity(0.8),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide.none,
                       ),
                     ),
-                    style: TextStyle(color: Colors.white),
                   ),
                   SizedBox(height: 15),
 
@@ -178,7 +168,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     decoration: InputDecoration(
                       labelText: 'Email',
                       filled: true,
-                      fillColor: Colors.white.withOpacity(0.3),
+                      fillColor: Colors.white.withOpacity(0.8),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide.none,
@@ -186,7 +176,6 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       errorText: _emailError,
                     ),
                     keyboardType: TextInputType.emailAddress,
-                    style: TextStyle(color: Colors.white),
                   ),
                   SizedBox(height: 15),
 
@@ -196,7 +185,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     decoration: InputDecoration(
                       labelText: 'Password',
                       filled: true,
-                      fillColor: Colors.white.withOpacity(0.3),
+                      fillColor: Colors.white.withOpacity(0.8),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide.none,
@@ -204,7 +193,6 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       errorText: _passwordError,
                     ),
                     obscureText: true,
-                    style: TextStyle(color: Colors.white),
                   ),
                   SizedBox(height: 30),
 
@@ -212,14 +200,14 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   ElevatedButton(
                     onPressed: _createUserAccount,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.cyanAccent,
+                      backgroundColor: Colors.white,
                       foregroundColor: Colors.black,
                       padding: EdgeInsets.symmetric(vertical: 15),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      elevation: 10,
-                      shadowColor: Colors.cyanAccent.withOpacity(0.5),
+                      elevation: 5,
+                      shadowColor: Colors.black.withOpacity(0.2),
                     ),
                     child: Text(
                       "Create Account",

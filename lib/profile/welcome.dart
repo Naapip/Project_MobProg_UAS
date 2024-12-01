@@ -5,11 +5,14 @@ class WelcomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Welcome!',
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black), // Teks hitam di AppBar
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.black), // Teks hitam di AppBar
         ),
-        backgroundColor: Colors.white, // Latar belakang putih pada AppBar
+        backgroundColor:
+            const Color(0xFFEADCF8), // Latar belakang ungu pastel pada AppBar
         elevation: 0,
       ),
       body: Padding(
@@ -17,7 +20,7 @@ class WelcomePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Thanks for joining our platform! We\'re excited to have you with us.',
               style: TextStyle(
                 fontSize: 18,
@@ -25,14 +28,17 @@ class WelcomePage extends StatelessWidget {
                 color: Colors.black, // Teks hitam
               ),
             ),
-            SizedBox(height: 16),
-            Text(
+            const SizedBox(height: 16),
+            const Text(
               'Start exploring your dashboard and enjoy all the features we offer. If you need help, feel free to contact our support team.',
-              style: TextStyle(fontSize: 16, color: Colors.black87), // Teks hitam dengan opacity
+              style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black87), // Teks hitam dengan opacity
             ),
-            SizedBox(height: 32),
-            Icon(Icons.sentiment_very_satisfied, size: 100, color: Colors.black), // Ikon hitam
-            Spacer(),
+            const SizedBox(height: 32),
+            const Icon(Icons.sentiment_very_satisfied,
+                size: 100, color: Colors.black), // Ikon hitam
+            const Spacer(),
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context); // Kembali ke halaman sebelumnya
@@ -40,7 +46,7 @@ class WelcomePage extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.black, // Latar belakang tombol hitam
               ),
-              child: Text(
+              child: const Text(
                 'Back to Notifications',
                 style: TextStyle(color: Colors.white), // Teks putih pada tombol
               ),
@@ -48,7 +54,8 @@ class WelcomePage extends StatelessWidget {
           ],
         ),
       ),
-      backgroundColor: Colors.white, // Latar belakang halaman putih
+      backgroundColor:
+          const Color(0xFFEADCF8), // Latar belakang ungu pastel untuk halaman
     );
   }
 }

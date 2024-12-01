@@ -32,11 +32,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Edit Profile',
-          style: TextStyle(color: Colors.black), // Warna teks hitam untuk AppBar
+          style:
+              TextStyle(color: Colors.black), // Warna teks hitam untuk AppBar
         ),
-        backgroundColor: Colors.white, // Warna latar belakang AppBar menjadi putih
+        backgroundColor: const Color(0xFFEADCF8), // Ungu pastel
         elevation: 0,
       ),
       body: Padding(
@@ -48,8 +49,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
               controller: _nameController,
               decoration: InputDecoration(
                 labelText: 'Name',
-                labelStyle: TextStyle(color: Colors.black), // Warna label hitam
-                border: OutlineInputBorder(),
+                labelStyle:
+                    const TextStyle(color: Colors.black), // Warna label hitam
+                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 16),
@@ -59,8 +61,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
               controller: _emailController,
               decoration: InputDecoration(
                 labelText: 'Email',
-                labelStyle: TextStyle(color: Colors.black), // Warna label hitam
-                border: OutlineInputBorder(),
+                labelStyle:
+                    const TextStyle(color: Colors.black), // Warna label hitam
+                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 24),
@@ -73,7 +76,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   'email': _emailController.text,
                 });
               },
-              child: Text(
+              child: const Text(
                 'Save',
                 style: TextStyle(
                   color: Colors.white, // Teks putih pada tombol
@@ -81,7 +84,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.black, // Warna tombol hitam
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 14),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 40, vertical: 14),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -90,6 +94,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           ],
         ),
       ),
+      backgroundColor: const Color(0xFFEADCF8), // Latar belakang ungu pastel
     );
   }
 }

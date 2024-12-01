@@ -5,11 +5,14 @@ class ReminderPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Reminder',
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black), // Teks hitam di AppBar
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.black), // Teks hitam di AppBar
         ),
-        backgroundColor: Colors.white, // Latar belakang putih pada AppBar
+        backgroundColor:
+            const Color(0xFFEADCF8), // Background ungu pastel pada AppBar
         elevation: 0,
       ),
       body: Padding(
@@ -17,7 +20,7 @@ class ReminderPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Don\'t forget your meeting at 3 PM today. Make sure you\'re prepared!',
               style: TextStyle(
                 fontSize: 18,
@@ -25,14 +28,17 @@ class ReminderPage extends StatelessWidget {
                 color: Colors.black, // Teks hitam untuk deskripsi
               ),
             ),
-            SizedBox(height: 16),
-            Text(
+            const SizedBox(height: 16),
+            const Text(
               'Your meeting with the team is about to begin. Please gather all your materials and be ready to present your progress.',
-              style: TextStyle(fontSize: 16, color: Colors.black87), // Teks hitam dengan opacity
+              style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black87), // Teks hitam dengan opacity
             ),
-            SizedBox(height: 32),
-            Icon(Icons.event_available, size: 100, color: Colors.black), // Ikon hitam
-            Spacer(),
+            const SizedBox(height: 32),
+            const Icon(Icons.event_available,
+                size: 100, color: Colors.black), // Ikon hitam
+            const Spacer(),
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context); // Kembali ke halaman sebelumnya
@@ -40,7 +46,7 @@ class ReminderPage extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.black, // Latar belakang tombol hitam
               ),
-              child: Text(
+              child: const Text(
                 'Back to Notifications',
                 style: TextStyle(color: Colors.white), // Teks putih pada tombol
               ),
@@ -48,7 +54,8 @@ class ReminderPage extends StatelessWidget {
           ],
         ),
       ),
-      backgroundColor: Colors.white, // Latar belakang putih untuk halaman
+      backgroundColor:
+          const Color(0xFFEADCF8), // Background ungu pastel untuk halaman
     );
   }
 }
