@@ -196,7 +196,7 @@ class _NewTaskPageState extends State<NewTaskPage> {
                 ),
               ),
               child: const Text(
-                'Save Task',
+                'Add Task',
                 style: TextStyle(color: Colors.white),
               ),
             ),

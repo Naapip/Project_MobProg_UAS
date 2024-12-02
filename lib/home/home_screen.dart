@@ -39,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
           style: const TextStyle(color: Colors.black),
         ),
         centerTitle: true,
+        automaticallyImplyLeading: false, // Menghapus ikon back arrow
       ),
       body: _currentIndex == 0
           ? _buildHomeContent()
@@ -215,10 +216,25 @@ class _HomeScreenState extends State<HomeScreen> {
         const SizedBox(height: 20),
         Expanded(
           child: _activities[_selectedRoutine]?.isEmpty ?? true
-              ? const Center(
-                  child: Text(
-                    "Nothing here yet...",
-                    style: TextStyle(color: Colors.grey, fontSize: 16),
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/karakter.png',
+                        height: 200,
+                        width: 200,
+                      ),
+                      const SizedBox(height: 0),
+                      const Text(
+                        "Oops, no tasks yet!",
+                        style: TextStyle(color: Colors.grey, fontSize: 14),
+                      ),
+                      const Text(
+                        "Why not add one now?",
+                        style: TextStyle(color: Colors.grey, fontSize: 12),
+                      ),
+                    ],
                   ),
                 )
               : ListView.builder(

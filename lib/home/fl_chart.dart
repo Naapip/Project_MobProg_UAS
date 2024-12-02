@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-void main() {
-  runApp(const AnalyticsScreen());
-}
-
 class AnalyticsScreen extends StatefulWidget {
   const AnalyticsScreen({Key? key}) : super(key: key);
 

@@ -1,8 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'login_screen2.dart';
 import '/login/create_account_screen.dart';
+import 'package:project_mobprog_uas/home/home_screen.dart';
 
 class LoginScreen1 extends StatelessWidget {
+  final double logoWidth;
+  final double logoHeight;
+
+  // Constructor untuk menerima ukuran logo
+  LoginScreen1({
+    this.logoWidth = 155.0, // Ukuran logo default
+    this.logoHeight = 155.0, // Ukuran logo default
+  });
+
+  Future<User?> signInWithGoogle() async {
+    try {
+      final GoogleSignIn googleSignIn = GoogleSignIn();
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+
+      if (googleUser != null) {
+        final GoogleSignInAuthentication googleAuth =
+            await googleUser.authentication;
+
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+
+        final UserCredential userCredential =
+            await FirebaseAuth.instance.signInWithCredential(credential);
+
+        return userCredential.user;
+      }
+    } catch (e) {
+      print('Error during Google Sign-In: $e');
+      return null;
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,21 +61,27 @@ class LoginScreen1 extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Teks judul dengan efek glow
+                  SizedBox(height: 165),
+                  Image.asset(
+                    'assets/logo-black.png',
+                    width: logoWidth,
+                    height: logoHeight,
+                  ),
+                  SizedBox(height: 35.0),
                   Text(
-                    "Do your tasks\nquickly and easy",
+                    "Do your tasks quickly and easy",
                     style: TextStyle(
-                      fontSize: 34,
+                      fontSize: 23,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
-                      height: 1.3,
+                      height: 1.2,
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 3.0),
                   Text(
                     "Your tasks, your rules, our support.",
                     style: TextStyle(
@@ -46,9 +90,7 @@ class LoginScreen1 extends StatelessWidget {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 40),
-
-                  // Tombol Login
+                  SizedBox(height: 25),
                   ElevatedButton(
                     onPressed: () {
                       Navigator.push(
@@ -76,8 +118,6 @@ class LoginScreen1 extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 10),
-
-                  // Teks untuk membuat akun
                   TextButton(
                     onPressed: () {
                       Navigator.push(
@@ -95,8 +135,6 @@ class LoginScreen1 extends StatelessWidget {
                       ),
                     ),
                   ),
-
-                  // Pembatas dengan teks "OR"
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     child: Row(
@@ -117,21 +155,9 @@ class LoginScreen1 extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 10),
-
-                  // Ikon Login dengan sosial media
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      IconButton(
-                        icon: Image.asset(
-                          'assets/facebook.png',
-                          width: 40,
-                          height: 40,
-                        ),
-                        onPressed: () {
-                          // Aksi login dengan Facebook
-                        },
-                      ),
                       SizedBox(width: 20),
                       IconButton(
                         icon: Image.asset(
@@ -139,21 +165,17 @@ class LoginScreen1 extends StatelessWidget {
                           width: 40,
                           height: 40,
                         ),
-                        onPressed: () {
-                          // Aksi login dengan Google
+                        onPressed: () async {
+                          User? user = await signInWithGoogle();
+                          if (user != null) {
+                            print("Berhasil login: ${user.displayName}");
+                            // Lakukan navigasi ke layar berikutnya
+                          } else {
+                            print("Login Google gagal");
+                          }
                         },
                       ),
                       SizedBox(width: 20),
-                      IconButton(
-                        icon: Image.asset(
-                          'assets/apple.png',
-                          width: 40,
-                          height: 40,
-                        ),
-                        onPressed: () {
-                          // Aksi login dengan Apple
-                        },
-                      ),
                     ],
                   ),
                 ],

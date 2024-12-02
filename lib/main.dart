@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'HabitHUB',
+      title: 'T-Track',
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),

@@ -17,8 +17,9 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: const Color(0xFFEADCF8), // Ungu pastel lembut
+        backgroundColor: const Color(0xFFEADCF8), // Warna ungu pastel lembut
         elevation: 0,
+        automaticallyImplyLeading: false, // Menghapus ikon back arrow otomatis
       ),
       body: Container(
         color: const Color(0xFFEADCF8), // Latar belakang ungu pastel
